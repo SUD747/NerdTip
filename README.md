@@ -14,6 +14,10 @@
 
 Ever read an article packed with terms like **RAG**, **EBITDA**, **metastasis**, or **habeas corpus** and had to open a new tab to look them up? NerdTip underlines jargon on any web page. Hover over it and a short definition appears right where you're reading.
 
+<p align="center">
+  <img src="store/screenshot-1-hover.jpg" alt="NerdTip showing a tooltip that defines RAG while hovering over it in an article">
+</p>
+
 ## Features
 
 - **Works on any website.** News, docs, research papers, forums.
@@ -54,6 +58,17 @@ Until then, you can install NerdTip from source. See [Loading the extension](CON
    - turn NerdTip off for the current site
    - choose which glossaries are active
 4. **Add custom terms** from the popup via **Manage custom terms**. Your definitions take priority over the built-in ones.
+
+<table>
+  <tr>
+    <td width="50%"><img src="store/screenshot-3-popup.jpg" alt="NerdTip popup with a per-site switch and a switch for each glossary"></td>
+    <td width="50%"><img src="store/screenshot-4-custom-terms.jpg" alt="NerdTip custom terms page with a form to add a term and definition"></td>
+  </tr>
+  <tr>
+    <td align="center">Turn it off per site and pick glossaries</td>
+    <td align="center">Add your own terms</td>
+  </tr>
+</table>
 
 ## FAQ
 

@@ -1,0 +1,15 @@
+{
+  "name": "glossary-tooltip",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Cross-browser extension that highlights jargon and shows hover definitions.",
+  "scripts": {
+    "postinstall": "node -e \"require('fs').cpSync('node_modules/webextension-polyfill/dist/browser-polyfill.min.js', 'vendor/browser-polyfill.js')\"",
+    "test": "node test/matcher.test.js",
+    "build": "sh scripts/build.sh"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.12.0"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Glossary Tooltip",
+  "version": "0.1.0",
+  "description": "Highlights jargon and acronyms on any page and shows a hover tooltip with a definition.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Glossary Tooltip",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage", "activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle",
+      "js": [
+        "vendor/browser-polyfill.js",
+        "src/shared/settings.js",
+        "src/content/glossary.js",
+        "src/content/matcher.js",
+        "src/content/scanner.js",
+        "src/content/tooltip.js",
+        "src/content/content.js"
+      ],
+      "css": ["src/content/content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["glossary/*.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "glossary-tooltip@yourname",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  }
+}

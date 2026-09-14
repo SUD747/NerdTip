@@ -1,0 +1,20 @@
+# Dependencies & generated files
+node_modules/
+vendor/
+dist/
+web-ext-artifacts/
+*.zip
+*.xpi
+*.crx
+*.pem
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

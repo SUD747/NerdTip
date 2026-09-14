@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Glossary Tooltip — Custom terms</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 640px; margin: 0 auto; padding: 24px 16px; font: 14px/1.5 system-ui, sans-serif; }
+    form { display: grid; gap: 8px; margin-bottom: 20px; }
+    input, textarea, button { font: inherit; padding: 6px 8px; }
+    textarea { min-height: 60px; resize: vertical; }
+    form button { justify-self: start; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; gap: 12px; align-items: baseline; padding: 8px 0; border-top: 1px solid #8884; }
+    li span { flex: 1; }
+    .note { color: GrayText; }
+  </style>
+</head>
+<body>
+  <h1>Custom terms</h1>
+  <p class="note">Your terms are highlighted on every enabled site and override built-in definitions.</p>
+
+  <form id="add-form">
+    <label for="term">Term</label>
+    <input id="term" required maxlength="60" autocomplete="off">
+    <label for="definition">Definition</label>
+    <textarea id="definition" required maxlength="500"></textarea>
+    <button type="submit">Add term</button>
+  </form>
+
+  <p class="note" id="empty">No custom terms yet.</p>
+  <ul id="terms"></ul>
+
+  <script src="../../vendor/browser-polyfill.js"></script>
+  <script src="../shared/settings.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

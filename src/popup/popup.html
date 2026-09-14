@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Glossary Tooltip</title>
+  <style>
+    :root { color-scheme: light dark; }
+    [hidden] { display: none !important; }
+    body { width: 260px; margin: 0; padding: 12px 14px; font: 13px/1.4 system-ui, sans-serif; }
+    h1 { font-size: 14px; margin: 0 0 10px; }
+    label { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+    #site { font-weight: 600; overflow-wrap: anywhere; }
+    fieldset { border: 1px solid #8884; border-radius: 6px; margin: 10px 0; padding: 6px 10px; }
+    legend { padding: 0 4px; }
+    .note { color: GrayText; margin: 4px 0; }
+    button { font: inherit; }
+  </style>
+</head>
+<body>
+  <h1>Glossary Tooltip</h1>
+
+  <label><input type="checkbox" id="site-enabled"> Enabled on&nbsp;<span id="site"></span></label>
+  <p class="note" id="unsupported" hidden>Glossary Tooltip can't run on this page.</p>
+
+  <fieldset>
+    <legend>Glossaries</legend>
+    <div id="domains"></div>
+  </fieldset>
+
+  <button type="button" id="open-options">Custom terms…</button>
+
+  <script src="../../vendor/browser-polyfill.js"></script>
+  <script src="../shared/settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

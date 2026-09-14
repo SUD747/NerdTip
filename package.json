@@ -1,11 +1,11 @@
 {
-  "name": "glossary-tooltip",
+  "name": "nerdtip",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "description": "Cross-browser extension that highlights jargon and shows hover definitions.",
   "scripts": {
-    "postinstall": "node -e \"require('fs').cpSync('node_modules/webextension-polyfill/dist/browser-polyfill.min.js', 'vendor/browser-polyfill.js')\"",
+    "postinstall": "node -e \"const fs = require('fs'); fs.mkdirSync('vendor', { recursive: true }); for (const f of ['browser-polyfill.js', 'browser-polyfill.js.map']) fs.copyFileSync('node_modules/webextension-polyfill/dist/' + f, 'vendor/' + f)\"",
     "test": "node test/matcher.test.js",
     "build": "sh scripts/build.sh"
   },

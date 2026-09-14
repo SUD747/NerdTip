@@ -28,18 +28,20 @@ const toggleInList = (list, value, include) =>
 
   const container = document.getElementById('domains');
   for (const domain of GLOSSARY_DOMAINS) {
-    const label = document.createElement('label');
+    const label = Object.assign(document.createElement('label'), { className: 'row' });
     const box = Object.assign(document.createElement('input'), {
       type: 'checkbox',
+      className: 'switch',
       checked: !settings.disabledDomains.includes(domain.id),
     });
+    box.setAttribute('role', 'switch');
     box.addEventListener('change', async () => {
       const { disabledDomains } = await getSettings();
       await browser.storage.local.set({
         disabledDomains: toggleInList(disabledDomains, domain.id, !box.checked),
       });
     });
-    label.append(box, domain.label);
+    label.append(domain.label, box);
     container.append(label);
   }
 

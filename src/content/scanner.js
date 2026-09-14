@@ -1,6 +1,6 @@
 // DOM scanning: finds text nodes, wraps glossary matches, watches for new content.
 
-const TERM_CLASS = 'glossary-term';
+const TERM_CLASS = 'nerdtip-term';
 const SKIP_SELECTOR = `script, style, noscript, template, textarea, input, select, option,
   code, pre, kbd, samp, svg, math, iframe, .${TERM_CLASS}`;
 const RESCAN_THROTTLE_MS = 1000;
@@ -45,7 +45,7 @@ function wrapMatches(textNode, matcher, seen) {
     termNode.splitText(length);
     const span = document.createElement('span');
     span.className = TERM_CLASS;
-    span.dataset.glossaryKey = key;
+    span.dataset.nerdtipKey = key;
     termNode.replaceWith(span);
     span.append(termNode);
     seen.add(key);

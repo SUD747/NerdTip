@@ -15,9 +15,17 @@ async function render() {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([term, definition]) => {
       const li = document.createElement('li');
-      const text = document.createElement('span');
-      text.append(Object.assign(document.createElement('strong'), { textContent: term }), ` — ${definition}`);
-      const remove = Object.assign(document.createElement('button'), { type: 'button', textContent: 'Remove' });
+      const text = Object.assign(document.createElement('div'), { className: 'term-body' });
+      text.append(
+        Object.assign(document.createElement('strong'), { textContent: term }),
+        Object.assign(document.createElement('span'), { className: 'term-def', textContent: definition })
+      );
+      const remove = Object.assign(document.createElement('button'), {
+        type: 'button',
+        className: 'btn btn-danger',
+        textContent: 'Remove',
+      });
+      remove.setAttribute('aria-label', `Remove ${term}`);
       remove.addEventListener('click', async () => {
         const settings = await getSettings();
         await browser.storage.local.set({ customTerms: withoutTerm(settings.customTerms, term) });

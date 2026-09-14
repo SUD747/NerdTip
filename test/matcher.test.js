@@ -18,4 +18,26 @@ assert.deepEqual(keys('our CI/CD pipeline'), ['ci/cd']);
 // First match only: repeats in the same text and terms already seen elsewhere are skipped.
 assert.deepEqual(keys('API API embedding', new Set(['embedding'])), ['api']);
 
-console.log('matcher tests passed');
+// Glossary files: every registered file parses, has no duplicate terms (within or across
+// files, case-insensitive — later ones would silently override), and builds a matcher.
+const fs = require('node:fs');
+const path = require('node:path');
+const { GLOSSARY_DOMAINS } = require('../src/shared/settings.js');
+const owner = new Map();
+for (const { file } of GLOSSARY_DOMAINS) {
+  const raw = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
+  const terms = [...raw.matchAll(/^\s*"((?:[^"\\]|\\.)*)"\s*:/gm)].map((m) => m[1]);
+  assert.equal(terms.length, Object.keys(JSON.parse(raw)).length, `${file}: duplicate key`);
+  for (const term of terms) {
+    const key = term.toLowerCase();
+    assert.ok(!owner.has(key), `"${term}" in ${file} duplicates ${owner.get(key)}`);
+    owner.set(key, file);
+  }
+  buildMatcher(terms);
+}
+assert.deepEqual(
+  buildMatcher([...owner.keys()]).find('An ETF, a CT scan, and a 401(k) plan under GDPR', new Set()).map((x) => x.key),
+  ['etf', 'ct scan', '401(k)', 'gdpr']
+);
+
+console.log(`matcher tests passed (${owner.size} glossary terms checked)`);

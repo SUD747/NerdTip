@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Glossary Tooltip",
+  "name": "NerdTip",
   "version": "0.1.0",
   "description": "Highlights jargon and acronyms on any page and shows a hover tooltip with a definition.",
   "icons": {
@@ -10,7 +10,7 @@
     "128": "icons/icon-128.png"
   },
   "action": {
-    "default_title": "Glossary Tooltip",
+    "default_title": "NerdTip",
     "default_popup": "src/popup/popup.html",
     "default_icon": {
       "16": "icons/icon-16.png",
@@ -46,7 +46,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "glossary-tooltip@yourname",
+      "id": "nerdtip@sud747",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
         "required": ["none"]

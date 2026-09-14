@@ -7,7 +7,7 @@ function loadDomain(domain) {
     const request = fetch(browser.runtime.getURL(domain.file))
       .then((res) => res.json())
       .catch((err) => {
-        console.warn(`[glossary-tooltip] failed to load ${domain.file}`, err);
+        console.warn(`[nerdtip] failed to load ${domain.file}`, err);
         domainCache.delete(domain.id);
         return {};
       });

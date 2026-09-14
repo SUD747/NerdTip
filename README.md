@@ -1,93 +1,84 @@
-# Glossary Tooltip
+<p align="center">
+  <img src="icons/icon-128.png" width="96" height="96" alt="NerdTip logo">
+</p>
 
-A browser extension for Chrome, Edge, Brave, and Firefox. It finds jargon and acronyms on any page, adds a dotted underline, and shows a short definition when you hover over them.
+<h1 align="center">NerdTip</h1>
 
-- Highlights only the **first** occurrence of each term on a page, so pages stay readable.
-- Skips code blocks, form fields, editable areas, and hidden text.
-- Also catches content that loads after the page does (infinite scroll, single-page apps), with rescans throttled.
-- The popup turns it on or off per site and picks which glossaries are active.
-- The options page lets you add your own terms.
+<p align="center"><strong>Hover over jargon, get a plain-English definition.</strong></p>
 
-## Setup
+<p align="center">
+  Chrome · Edge · Brave · Firefox
+</p>
 
-Requires Node.js 18+ (only to copy the polyfill and build zips; there is no bundler).
+---
 
-```sh
-npm install      # installs webextension-polyfill and copies it to vendor/
-npm test         # matcher self-check
-npm run build    # dist/chromium/, dist/firefox/ + a zip for each (needs `zip` on PATH)
-```
+Ever read an article packed with terms like **RAG**, **EBITDA**, **metastasis**, or **habeas corpus** and had to open a new tab to look them up? NerdTip underlines jargon on any web page. Hover over it and a short definition appears right where you're reading.
 
-## Load unpacked
+## Features
 
-The repo root is itself a loadable extension after `npm install`. For Chromium browsers, `dist/chromium` avoids a harmless "Unrecognized manifest key" warning.
+- **Works on any website.** News, docs, research papers, forums.
+- **Hover to learn.** A clean tooltip with a one or two sentence definition appears next to your cursor.
+- **Stays out of the way.** Only the first mention of each term is underlined. Code blocks, text boxes, and hidden text are left alone.
+- **Keeps up with dynamic pages.** Content that loads as you scroll gets highlighted too.
+- **Turn it off per site.** One click in the toolbar popup.
+- **Choose your glossaries.** Turn on only the subjects you care about.
+- **Add your own terms.** Teach NerdTip your team's acronyms or your field's vocabulary.
+- **Private by design.** Everything happens in your browser. No accounts, no tracking, no network requests.
+- **Light and dark mode.** Follows your system theme.
 
-### Chrome / Edge / Brave
+## Built-in glossaries
 
-1. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
-2. Turn on **Developer mode**.
-3. Click **Load unpacked** and select the repo root or `dist/chromium`.
-4. Optional: to run on `file://` pages, open the extension's **Details** and enable **Allow access to file URLs**.
+| Glossary | Terms | Examples |
+|---|---:|---|
+| 💻 CS / ML / AI | 143 | API, Docker, race condition, transformer, RAG, quantization |
+| 📈 Finance & Economics | 67 | ETF, P/E ratio, 401(k), yield curve, stablecoin |
+| 🩺 Medicine & Health | 63 | MRI, HbA1c, metastasis, SSRI, CRISPR |
+| ⚖️ Law | 51 | habeas corpus, force majeure, NDA, GDPR |
+| 🔭 Astronomy | 73 | light-year, exoplanet, redshift, dark matter, Lagrange point |
 
-### Firefox (140+)
+## Install
 
-1. Open `about:debugging#/runtime/this-firefox`.
-2. Click **Load Temporary Add-on…** and select `manifest.json` in the repo root or in `dist/firefox`.
-3. If nothing gets highlighted, open `about:addons` → Glossary Tooltip → **Permissions** and allow access to all websites. Firefox treats MV3 host access as something the user can revoke.
+Store listings are coming soon:
 
-Temporary add-ons are removed when Firefox restarts.
+- **Chrome & Brave:** Chrome Web Store *(coming soon)*
+- **Edge:** Microsoft Edge Add-ons *(coming soon)*
+- **Firefox:** Firefox Add-ons *(coming soon, requires Firefox 140+)*
 
-After editing source files, click the reload icon on the extensions page and refresh the tab.
+Until then, you can install NerdTip from source. See [Loading the extension](CONTRIBUTING.md#loading-the-extension).
 
-## How it works
+## How to use
 
-It's a content-script-only MV3 extension with **no background script**. That avoids the service-worker vs. event-page differences between Chromium and Firefox, so a single `manifest.json` works everywhere. Chromium ignores the `browser_specific_settings.gecko` block Firefox needs. Every API call goes through `browser.*` via [webextension-polyfill](https://github.com/mozilla/webextension-polyfill).
+1. **Browse normally.** Jargon on the page gets a subtle dotted underline.
+2. **Hover over an underlined word** to see its definition and which glossary it came from.
+3. **Click the NerdTip icon** in your toolbar to:
+   - turn NerdTip off for the current site
+   - choose which glossaries are active
+4. **Add custom terms** from the popup via **Manage custom terms**. Your definitions take priority over the built-in ones.
 
-```
-manifest.json
-glossary/cs-ml-terms.json     { "term": "definition" } data, one file per domain
-src/shared/settings.js        glossary domain registry, default settings, storage helpers
-src/content/glossary.js       loads + merges active domains and custom terms; Wiktionary fallback stub
-src/content/matcher.js        pure regex matching (no DOM, tested under Node)
-src/content/scanner.js        TreeWalker scan, wrapping, MutationObserver, unwrap
-src/content/tooltip.js        hover tooltip in a shadow root
-src/content/content.js        entry point: settings -> glossary -> scanner, re-applies on changes
-src/popup/                    per-site toggle + glossary checkboxes
-src/options/                  custom term editor
-scripts/build.sh              per-target folders and zips
-test/matcher.test.js
-```
+## FAQ
 
-Content scripts are plain scripts that share one scope, listed in dependency order in `manifest.json`. They are not ES modules.
+**Nothing is highlighted on a page.**
+Reload the tab. Pages that were already open when you installed NerdTip need a refresh. Also check that the site isn't turned off in the popup.
 
-Settings live in `storage.local`: `disabledSites`, `disabledDomains`, and `customTerms`. The popup and options page write to storage, and content scripts re-apply through `storage.onChanged`, so there's no message passing.
+**It doesn't work on some pages.**
+Browsers don't let extensions run on internal pages such as `chrome://` or `about:` pages, the new-tab page, or extension stores.
 
-### Matching rules
+**Firefox: nothing gets highlighted anywhere.**
+Open `about:addons` → NerdTip → **Permissions** and allow access to all websites.
 
-- Lookup is case-insensitive. Terms written with capitals in a glossary (`RAG`, `LoRA`) match only that exact casing or ALL CAPS, so `RAG` doesn't highlight "an old rag". Lowercase terms (`embedding`) match any casing.
-- Longer terms win (`machine learning` over `learning`). Simple plurals match (`APIs`, `embeddings`).
-- Word boundaries are Unicode-aware and work for terms like `CI/CD`.
+**A site looks or behaves oddly with NerdTip on.**
+Turn NerdTip off for that site from the popup, and please [report it](CONTRIBUTING.md#reporting-bugs) so it can be fixed.
 
-## Adding a glossary domain
+**A common word is being highlighted by mistake.**
+Please report it. Glossaries deliberately avoid everyday words, so false matches are bugs.
 
-1. Add `glossary/finance-terms.json` with the `{ "term": "definition" }` structure.
-2. Register it in `src/shared/settings.js`:
-   ```js
-   { id: 'finance', label: 'Finance', file: 'glossary/finance-terms.json' },
-   ```
+## Privacy
 
-It will show up in the popup, enabled by default.
+NerdTip doesn't collect or send any data. Page text is checked locally against glossaries bundled in the extension. Your settings and custom terms stay in your browser. Read the full [privacy policy](PRIVACY.md).
 
-## Roadmap / TODO
+## Contributing
 
-- `fetchDefinitionFallback(term)` in `src/content/glossary.js` is a stub for the Wiktionary REST API. It isn't connected to any UI yet (e.g. looking up a selected word).
-- Keyboard access to highlighted terms (focus → tooltip).
-- Scanning inside iframes (`all_frames`) and shadow DOM.
-
-## Known limitations
-
-- Wrapping text in `<span>`s changes the page DOM. Rarely, a framework that tracks its own text nodes (React, etc.) might complain when it re-renders a highlighted paragraph. If a site misbehaves, turn the extension off for that site in the popup.
-- Text that changes in place (`characterData` mutations) isn't rescanned. Only newly added nodes are.
+Want to add a glossary, fix a definition, or improve the code? Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

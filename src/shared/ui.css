@@ -1,0 +1,134 @@
+/* Shared look for the popup and options page. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --surface: #f6f7fb;
+  --border: #e3e5ee;
+  --track: #cdd0dc;
+  --border-strong: #b9bdcc;
+  --text: #1b1d27;
+  --muted: #676c80;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef0ff;
+  --on-accent: #ffffff;
+  --danger: #c2334d;
+  --danger-soft: #fdecef;
+  --radius: 12px;
+  --focus-ring: 0 0 0 3px rgb(79 70 229 / 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15161c;
+    --surface: #1e1f28;
+    --border: #2d2f3b;
+    --track: #3b3e4d;
+    --border-strong: #454859;
+    --text: #e8e9ef;
+    --muted: #9a9eb1;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-soft: rgb(129 140 248 / 0.14);
+    --on-accent: #11121a;
+    --danger: #f87191;
+    --danger-soft: rgb(248 113 145 / 0.12);
+    --focus-ring: 0 0 0 3px rgb(129 140 248 / 0.4);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, p { margin: 0; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.muted { color: var(--muted); }
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn:hover { border-color: var(--muted); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-danger { border-color: transparent; background: transparent; color: var(--danger); }
+.btn-danger:hover { border-color: transparent; background: var(--danger-soft); }
+
+/* Toggle switch: a real checkbox, restyled */
+.switch {
+  appearance: none;
+  flex: none;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--track);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  transition: transform 0.15s;
+}
+.switch:checked { background: var(--accent); }
+.switch:checked::before { transform: translateX(16px); }
+
+/* Text fields */
+.input {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder { color: var(--muted); opacity: 0.8; }
+.input:focus { border-color: var(--accent); box-shadow: var(--focus-ring); outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before { transition: none !important; }
+}

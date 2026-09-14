@@ -1,7 +1,7 @@
 #!/bin/sh
 # Builds loadable folders + store zips for each target from the one source tree:
-#   dist/chromium/  (Chrome, Edge, Brave)  dist/glossary-tooltip-chromium.zip
-#   dist/firefox/                          dist/glossary-tooltip-firefox.zip
+#   dist/chromium/  (Chrome, Edge, Brave)  dist/nerdtip-chromium.zip
+#   dist/firefox/                          dist/nerdtip-firefox.zip
 # The only per-target difference: Chromium's copy drops browser_specific_settings,
 # which Chrome would otherwise flag as an unrecognized manifest key.
 set -e
@@ -26,7 +26,7 @@ node -e '
 '
 
 for target in chromium firefox; do
-  (cd "dist/$target" && zip -qr "../glossary-tooltip-$target.zip" .)
+  (cd "dist/$target" && zip -qr "../nerdtip-$target.zip" .)
 done
 
 echo "Built dist/chromium, dist/firefox and their zips."

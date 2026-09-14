@@ -2,32 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Glossary Tooltip</title>
+  <title>NerdTip</title>
+  <link rel="stylesheet" href="../shared/ui.css">
   <style>
-    :root { color-scheme: light dark; }
-    [hidden] { display: none !important; }
-    body { width: 260px; margin: 0; padding: 12px 14px; font: 13px/1.4 system-ui, sans-serif; }
-    h1 { font-size: 14px; margin: 0 0 10px; }
-    label { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
-    #site { font-weight: 600; overflow-wrap: anywhere; }
-    fieldset { border: 1px solid #8884; border-radius: 6px; margin: 10px 0; padding: 6px 10px; }
-    legend { padding: 0 4px; }
-    .note { color: GrayText; margin: 4px 0; }
-    button { font: inherit; }
+    body { width: 300px; padding: 14px; display: grid; gap: 12px; }
+
+    .header { display: flex; align-items: center; gap: 10px; }
+    .header h1 { font-size: 15px; font-weight: 650; }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+    .row + .row { border-top: 1px solid var(--border); }
+    .row-text { display: grid; min-width: 0; }
+    .row-sub {
+      font-size: 12px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .unsupported { padding: 10px 12px; font-size: 13px; }
+    .section-title { margin: 2px 2px -4px; }
+    .footer .btn { width: 100%; }
   </style>
 </head>
 <body>
-  <h1>Glossary Tooltip</h1>
+  <header class="header">
+    <img src="../../icons/icon-32.png" width="26" height="26" alt="">
+    <h1>NerdTip</h1>
+  </header>
 
-  <label><input type="checkbox" id="site-enabled"> Enabled on&nbsp;<span id="site"></span></label>
-  <p class="note" id="unsupported" hidden>Glossary Tooltip can't run on this page.</p>
+  <section class="card">
+    <label class="row">
+      <span class="row-text">
+        <span>Enabled on this site</span>
+        <span class="row-sub" id="site"></span>
+      </span>
+      <input type="checkbox" class="switch" role="switch" id="site-enabled">
+    </label>
+    <p class="unsupported muted" id="unsupported" hidden>NerdTip can't run on this page.</p>
+  </section>
 
-  <fieldset>
-    <legend>Glossaries</legend>
-    <div id="domains"></div>
-  </fieldset>
+  <h2 class="section-title">Glossaries</h2>
+  <section class="card" id="domains"></section>
 
-  <button type="button" id="open-options">Custom terms…</button>
+  <footer class="footer">
+    <button type="button" class="btn" id="open-options">Manage custom terms</button>
+  </footer>
 
   <script src="../../vendor/browser-polyfill.js"></script>
   <script src="../shared/settings.js"></script>

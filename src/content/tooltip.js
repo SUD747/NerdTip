@@ -24,7 +24,7 @@ const TOOLTIP_CSS = `
 
 // lookup(key) -> { term, definition, source } | undefined
 function createTooltip(lookup) {
-  const host = document.createElement('glossary-tooltip-host');
+  const host = document.createElement('nerdtip-tooltip');
   const shadow = host.attachShadow({ mode: 'closed' });
   const style = document.createElement('style');
   style.textContent = TOOLTIP_CSS;
@@ -62,7 +62,7 @@ function createTooltip(lookup) {
 
   document.addEventListener('mouseover', (e) => {
     const span = termAt(e.target);
-    const entry = span && lookup(span.dataset.glossaryKey);
+    const entry = span && lookup(span.dataset.nerdtipKey);
     if (entry) show(entry, e.clientX, e.clientY);
   });
   document.addEventListener('mousemove', (e) => {

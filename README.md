@@ -50,6 +50,76 @@ Store listings are coming soon:
 
 Until then, you can install NerdTip from source. See [Loading the extension](CONTRIBUTING.md#loading-the-extension).
 
+## Installation Guide / 安装指南
+### step 1:  Download the Project / 下载项目  
+
+Download the ZIP package from the GitHub repository by clicking Code → Download ZIP.
+![step 1](./store/install-step1.png)
+### step 2:  Extract the ZIP File / 解压文件 
+
+Extract the downloaded ZIP file and navigate to the extracted project folder.
+
+解压下载的 ZIP 文件，并进入项目根目录。
+
+### step 3: Build the Extension / 构建插件
+Open a terminal and navigate to the project's root directory.
+
+打开终端，并确保当前工作目录为项目根目录。
+You can verify your current directory by running:
+
+使用以下命令检查当前目录：
+```sh
+#检查自己是否在根目录下
+pwd
+
+# 预期输出：
+# admin@admindeMacBook-Pro NerdTip-main % pwd
+# /Users/admin/Downloads/NerdTip-main
+```
+Make sure the project root contains the scripts directory and the manifest.json file.
+
+确认项目根目录中包含 scripts 文件夹和 manifest.json 文件。
+
+Then run the build script:
+
+在项目根目录下执行以下构建命令：
+```bash
+sh scripts/build.sh
+```
+Prerequisites / 环境要求：
+```txt
+Node.js and npm（Node.js 和 npm）
+
+zip command-line utility（ZIP 命令行工具）
+```
+After a successful build, the following directories will be generated:
+
+构建成功后，将生成以下文件：
+```txt
+dist/
+├── chromium/              # Chrome / Edge / Brave
+├── firefox/               # Firefox
+```
+
+### step 4:  Open the Browser Extensions Page / 打开浏览器扩展管理页面
+open chrome or firefox web, navigate to the extensions management page
+![install-step4.png](./store/install-step4.png)
+### step 5:Load the Extension / 加载插件
+Select the following folder:
+
+选择构建生成的 Chromium 文件夹：
+![install-step5.png](./store/install-step5.png)
+
+Make sure you select the folder containing manifest.json, not the ZIP file.
+
+请注意，选择的是包含 manifest.json 的文件夹，而不是 ZIP 压缩包。
+### Final 最终效果：
+Hover over a recognized abbreviation to view its full form or explanation.
+
+将鼠标悬停在已识别的缩写上，即可查看对应的英文全称或解释。
+![install-test.png](./store/install-test.png)
+支持自定义简写词库
+![install-customize-vacabulary.png](./store/install-customize-vacabulary.png)
 ## How to use
 
 1. **Browse normally.** Jargon on the page gets a subtle dotted underline.
